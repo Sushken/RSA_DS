@@ -20,16 +20,18 @@ class RSA:
         e = 0
         while math.gcd(e, phi) != 1:
             e = randprime(2, phi - 1)
-        print("e = ", e)
 
         d = modinv(e, phi)
 
         privkey = [d, n]
         pubkey = [e, n]
         s = self.cipher(self.m, privkey)
-        print("cipher = ", s)
         dec = self.decipher(s, pubkey)
-        print("decipher = ", dec)
+
+        if self.m == dec:
+            print(True)
+        else:
+            print(False)
 
     def cipher(self, m, priv_key):
         return pow(m, priv_key[0], priv_key[1])
@@ -64,6 +66,9 @@ def modinv(a, m):
 
 
 if __name__ == '__main__':
-    file = open("input.txt", 'r')
-    text = file.read()
-    RSA(hash(text))
+    str = "Blowfish"
+    file = open("input_10MB.txt", 'w')
+    for i in range(1250001):
+        file.write(str)
+    # text = file.read()
+    # RSA(hash(text))
